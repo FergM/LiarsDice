@@ -22,11 +22,16 @@ if BidQty < 0:
 
 if (BidVal < 1) or (BidVal > 6):
     raise Exception("Bid value must be an integer from 1 to 6.")
+#-------------------Evaluate Each Player's hand
+HumanBincount = np.bincount(Human_Dice, minlength = 6+1) #For 6 sided Dice
+ComputerBincount = np.bincount(Computer_Dice, minlength = 6+1)
 
 #-------------------Evaluate Computer's hand
 #Find Value with most Occurences in Computer's Hand
 HandBincount = np.bincount(Computer_Dice, minlength = 6+1)
 HandOnes  = HandBincount[1] #Count ccurences of #1 in Computer's Hand
+##^ maybe just use HandBincount[1] instead of overwriting, avoids confusion.
+##^Consider Removing HandBincount & using just ComputerBincount.
 print("DEBUGPRINT HandBincount>", HandBincount)
 HandBincount[1] = 0         #Clear #1 rolls from bincount.
                             #Because #1 is a wildcard in this game
@@ -82,17 +87,26 @@ print("Computer chooses to", action)
 if action != "Reject":
     Bidder = "Computer"
     print("DEBUGPRINT Bidder = ", Bidder)
-    #INSERT HERE: value of bid if RaiseVal or RaiseQty
-elif action == "Reject":
+    if action == "RaiseVal":
+        BidVal = HandModeVal
+    else: # action = "RaiseQty":
+        BidVal = HandModeVal
+        BidQty = BidQty + 1
+else: #action == "Reject":
     Bidder = "Human"
     print("DEBUGPRINT Bidder = ", Bidder)
 
 #------------------Determine if Bidder Wins or Loses
+HumanBidQty = HumanBincount[BidVal] + HumanBincount[1]
+ComputerBidQty = ComputerBincount[BidVal] + ComputerBincount[1]
+print("\nDEBUGPRINT HumanBidQty", HumanBidQty)
+print("DEBUGPRINT ComputerBidQty", ComputerBidQty)
+print(f"DEBUGPRINT BidQty:{BidQty} BidVal: {BidVal}\n")
 
-#If ~HandBincount[BidVal] + HumanBincount[BidVal] >= BidQty
-#   Bidder wins
-#else
-#   Bidder Loses
+if BidQty <= (HumanBidQty + ComputerBidQty):
+    print(Bidder, "Wins!")
+else:
+    print(Bidder, "Loses")
 
 #---------------------------------------------------
 #Bot2v
