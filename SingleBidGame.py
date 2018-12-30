@@ -1,6 +1,5 @@
+#SINGLEBIDGAME.py: A Single Bid game of Liar's Dice.
 import numpy as np
-
-print("\n\nSTART GAME-------------:")
 
 #-------------------Internal Values
 Dice = 5 #Number of Dice per Player
@@ -8,6 +7,7 @@ Dice = 5 #Number of Dice per Player
 #-------------------Roll The Dice
 Andrew_Dice   = np.random.randint(1,7,size= Dice) #Draws 1 to (7-1) inclusive
 Computer_Dice = np.random.randint(1,7,size= Dice)
+print("\n\nSTART GAME-------------:")
 print("Your numbers are: ", Andrew_Dice)
 
 #-------------------Ask Andrew to Bid

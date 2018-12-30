@@ -1,3 +1,6 @@
+#SINGLEBIDGAME_DEBUGGER.py: Same core code as SingleBidGame.py.
+#   This version prints out values to help with debugging and development.
+
 import numpy as np
 
 print("\n\nSTART GAME-------------:")
