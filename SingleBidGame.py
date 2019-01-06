@@ -75,12 +75,18 @@ else: #action == "Reject":
     Bidder = "Andrew"
 
 #------------------Determine if Bidder Wins or Loses
-AndrewBidQty = AndrewBincount[BidVal] + AndrewBincount[1]
-ComputerBidQty = ComputerBincount[BidVal] + ComputerBincount[1]
 print("Computer's numbers are: ", Computer_Dice)
 print(f"\nFinal Bid by {Bidder} is {BidQty}, {BidVal}'s")
 
-if BidQty <= (AndrewBidQty + ComputerBidQty):
+#Count the Dice
+if BidVal == 1:
+    ShowDiceCnt = AndrewBincount[BidVal] + ComputerBincount[BidVal]
+else:
+    ShowDiceCnt = AndrewBincount[BidVal] + ComputerBincount[BidVal] + \
+                  AndrewBincount[1] + ComputerBincount[1]
+
+#Declare whether the final bidder Wins or Loses
+if BidQty <= ShowDiceCnt:
     print(Bidder, "Wins!")
 else:
     print(Bidder, "Loses")
