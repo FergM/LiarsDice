@@ -1,3 +1,0 @@
-* Write test scripts for existing singlebidgame
-* Extend to singleroundgame
-* Extend to multirountgame
