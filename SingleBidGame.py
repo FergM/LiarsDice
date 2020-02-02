@@ -5,16 +5,16 @@ import numpy as np
 Dice = 5 #Number of Dice per Player
 
 #-------------------Roll The Dice
-Andrew_Dice   = np.random.randint(1,7,size= Dice) #Draws 1 to (7-1) inclusive
+Human_Dice   = np.random.randint(1,7,size= Dice) #Draws 1 to (7-1) inclusive
 Computer_Dice = np.random.randint(1,7,size= Dice)
 print("\n\nSTART GAME-------------:")
-print("Your numbers are: ", Andrew_Dice)
+print("Your numbers are: ", Human_Dice)
 
-#-------------------Ask Andrew to Bid
+#-------------------Ask Human to Bid
 print("Please input your bid.")
 BidQty = int(input("Quantity: "))
 BidVal = int(input("Face Value: "))
-Bidder = "Andrew"
+Bidder = "Human"
 
 #Basic Error Checking
 if BidQty < 0:
@@ -23,7 +23,7 @@ if BidQty < 0:
 if (BidVal < 1) or (BidVal > 6):
     raise Exception("Bid value must be an integer from 1 to 6.")
 #-------------------Evaluate Each Player's hand
-AndrewBincount = np.bincount(Andrew_Dice, minlength = 6+1) #For 6 sided Dice
+HumanBincount = np.bincount(Human_Dice, minlength = 6+1) #For 6 sided Dice
 ComputerBincount = np.bincount(Computer_Dice, minlength = 6+1)
 
 #-------------------Evaluate Computer's hand
@@ -37,14 +37,14 @@ HandModeVal   = HandBincount.argmax() #Dice value which occurs most in computer'
 HandModeQty   = HandBincount[HandModeVal] #Qty = Number of occurences
 HandBidQty = HandBincount[BidVal] #Occurences of the bid # in computer's hand
 
-if Bidder == "Andrew":
-    print("Andrew has bid ", BidQty, BidVal, "'s.")
+if Bidder == "Human":
+    print("Human has bid ", BidQty, BidVal, "'s.")
 else:
-    raise Exception("Expected Bidder = 'Andrew' at this point.")
+    raise Exception("Expected Bidder = 'Human' at this point.")
 
 #-------------------Evaluate Computer's Options
 #Calculate Cost Functions for Each CounterBid Option
-OutOfHandE = Andrew_Dice.size * 1/3 #Out of Hand Quantity Expectation
+OutOfHandE = Human_Dice.size * 1/3 #Out of Hand Quantity Expectation
 
 #Reject Bid
 Reject_Cost   = (OutOfHandE + HandOnes + HandBidQty ) - BidQty
@@ -72,7 +72,7 @@ if action != "Reject":
         BidVal = HandModeVal
         BidQty = BidQty + 1
 else: #action == "Reject":
-    Bidder = "Andrew"
+    Bidder = "Human"
 
 #------------------Determine if Bidder Wins or Loses
 print("Computer's numbers are: ", Computer_Dice)
@@ -80,10 +80,10 @@ print(f"\nFinal Bid by {Bidder} is {BidQty}, {BidVal}'s")
 
 #Count the Dice
 if BidVal == 1:
-    ShowDiceCnt = AndrewBincount[BidVal] + ComputerBincount[BidVal]
+    ShowDiceCnt = HumanBincount[BidVal] + ComputerBincount[BidVal]
 else:
-    ShowDiceCnt = AndrewBincount[BidVal] + ComputerBincount[BidVal] + \
-                  AndrewBincount[1] + ComputerBincount[1]
+    ShowDiceCnt = HumanBincount[BidVal] + ComputerBincount[BidVal] + \
+                  HumanBincount[1] + ComputerBincount[1]
 
 #Declare whether the final bidder Wins or Loses
 if BidQty <= ShowDiceCnt:
